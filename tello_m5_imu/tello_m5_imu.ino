@@ -1,10 +1,31 @@
+/* Edge Impulse Arduino examples
+ * Copyright (c) 2021 EdgeImpulse Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 #define M5STACK_MPU6886 
 
 /* Includes ---------------------------------------------------------------- */
 #include <M5Stack.h>
 #include <Tello.h>
 #include <drone_gesture_control_accel_inference.h>
-//#include <Arduino_LSM9DS1.h>
 
 /* Constant defines -------------------------------------------------------- */
 #define CONVERT_G_TO_MS2    9.80665f
@@ -25,10 +46,7 @@ boolean do_control = false;
 * @brief      Arduino setup function
 */
 void setup()
-{
-    //Connect to the WiFi network
-    connectToWiFi(networkName, networkPswd);
-    
+{    
     // Initialize the M5Stack object
     M5.begin();
     /*
@@ -45,15 +63,18 @@ void setup()
     M5.Lcd.setTextSize(2);
     
     // put your setup code here, to run once:
-    Serial.begin(115200);
-    Serial.println("Drone Gesture Control");
-
-//    if (!IMU.begin()) {
-//        ei_printf("Failed to initialize IMU!\r\n");
-//    }
-//    else {
-//        ei_printf("IMU initialized\r\n");
-//    }
+    Serial.begin(115200);delay(2000);
+    Serial.println("Drone Gesture Control\nDesigned by Team Deodates\nProgrammers: Cris & Jiss\n--> Inference by EdgeImpulse\n\n");
+    M5.Lcd.setCursor(0, 20);
+    M5.Lcd.fillScreen(BLACK);
+    M5.Lcd.print("Drone Gesture Control\n\n");
+    M5.Lcd.print("Designed by Team Deodates\n\n");
+    M5.Lcd.print("Programmers: Cris & Jiss\n\n");
+    M5.Lcd.print("--> Inference by \n\t\tEdgeImpulse\n");
+    delay(2000);
+    
+    //Connect to the WiFi network
+    connectToWiFi(networkName, networkPswd);
 
     if (EI_CLASSIFIER_RAW_SAMPLES_PER_FRAME != 3) {
         ei_printf("ERR: EI_CLASSIFIER_RAW_SAMPLES_PER_FRAME should be equal to 3 (the 3 sensor axes)\n");
